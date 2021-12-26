@@ -19,8 +19,20 @@
             <th class="d-none"> {{$j->id}} </th>
             <td> {{$j->kode}} </td>
             <td> {{$j->jenis}} </td>
-            <td> {{$j->jumlah_produk}} </td>
-            <td> {{$j->total_harga_stok}} </td>
+            <td>
+                @if ($j->total_harga_stok == null)
+                    {{ 0 }}   
+                @else
+                    {{ $j->jumlah_produk }}
+                @endif 
+            </td>
+            <td> 
+                @if ($j->total_harga_stok == null)
+                {{ 0 }}   
+            @else
+                {{ $j->total_harga_stok }}
+            @endif      
+            </td>
         </tr>
         @empty
         @endforelse
@@ -28,24 +40,24 @@
 </table>
 <small>*A = Barang Sehari-hari (convenience goods) | B = Barang Toko (shopping goods) | C = Barang Khusus (speciality goods)</small>
 
-<!-- MODAL STORE SUPLIER-->
+<!-- MODAL STORE JENIS BARANG-->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal_store">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="m-4">
-                <form action="/suplier" method="POST" id="form_barang">
+                <form action="/jenis_barang" method="POST">
                     @csrf
                     <div class="form form-group">
-                        <label for="nama">Nama</label>
-                        <input type="text" class="form-control" name="nama" required>
-                        <label for="harga">Email</label>
-                        <input type="email" class="form-control" name="email" required>
-                        <label for="stock">Telp</label>
-                        <input type="text" class="form-control" name="telp" required>   
-                        <label for="stock">Alamat</label>
-                        <input type="text" class="form-control" name="alamat" required>                     
+                        <label for="kode">Kode</label>
+                        <select name="kode" class="custom-select">
+                            <option value="A">A - Barang Sehari - hari</option>
+                            <option value="B">B - Barang Toko</option>
+                            <option value="C">C - Barang Khusus</option>
+                        </select>
+                        <label for="jenis">Jenis Produk</label>
+                        <input type="text" class="form-control" name="jenis" required>                    
                     </div>
-                    <button type="submit" class="btn btn-primary" data-target=".tambah" >Tambah</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </form>
             </div>
         </div>
@@ -53,24 +65,25 @@
 </div>
 
 
-<!-- MODAL UPDATE SUPLIER-->
+<!-- MODAL UPDATE JENIS BARANG-->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal_update">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="m-4">
-                <form action="/suplier/update" method="POST" id="form_barang">
+                <form action="/jenis_barang/update" method="POST">
                     @method('PUT')
                     @csrf
                     <div class="form form-group">
                         <input type="hidden" class="form-control" name="id" id="id">
-                        <label for="nama">Nama</label>
-                        <input type="text" class="form-control" name="nama"  id="nama" required>
-                        <label for="harga">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" required>
-                        <label for="stock">Telp</label>
-                        <input type="text" class="form-control" name="telp" id="telp" required>   
-                        <label for="stock">Alamat</label>
-                        <input type="text" class="form-control" name="alamat" id="alamat" required>                     
+                        <label for="kode">Kode</label>
+                        <select name="kode" class="custom-select" id="kode">
+                            <option value="">--Pilih Kode--</option>
+                            <option value="A">A - Barang Sehari - hari</option>
+                            <option value="B">B - Barang Toko</option>
+                            <option value="C">C - Barang Khusus</option>
+                        </select>
+                        <label for="jenis">Jenis Produk</label>
+                        <input type="text" class="form-control" name="jenis" id="jenis" required>                    
                     </div>
                     <button type="submit" class="btn btn-primary" data-target=".tambah" >Update</button>
                 </form>

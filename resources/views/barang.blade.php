@@ -120,7 +120,7 @@
             <div class="modal-body m-4 text-center">
                 <h5>Hapus Data?</h5>
                 <br>
-                <form action="/barang/delete" method="POST" id="form_barang">
+                <form action="/barang/delete" method="POST" id="form_bar    ang">
                     @method('DELETE')
                     @csrf
                     <div class="form form-group">

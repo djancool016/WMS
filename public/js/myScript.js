@@ -52,4 +52,16 @@ $(document).ready( function () {
             $('#alamat').attr('value', table.row( this ).data()[4]);  
         }
     });
+    $('#tb_jenis').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');    
+            $('#id,#id_delete').attr('value', table.row( this ).data()[0]);    
+            $('#kode').attr('value', table.row( this ).data()[1]);    
+            $('#jenis').attr('value', table.row( this ).data()[2]);   
+        }
+    });
 });

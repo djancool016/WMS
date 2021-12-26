@@ -16,7 +16,7 @@ class JenisBarangController extends Controller
     public function index()
     {
         $jenisBarang = JenisBarang::select('jenis','kode',DB::raw("COUNT(jenis) as jumlah_produk, SUM(barang.harga*barang.stock) as total_harga_stok"))
-        ->join('barang','barang.jenis_barang_id','=','jenis_barang.id')
+        ->leftJoin('barang','barang.jenis_barang_id','=','jenis_barang.id')
         ->groupBy('jenis','kode')
         ->get();
 
@@ -47,7 +47,7 @@ class JenisBarangController extends Controller
         $jenisBarang->jenis = $request->jenis;
         $jenisBarang->save();
 
-        return "Data Berhasil Ditambahkan!!!";
+        return redirect('jenis_barang');
     }
 
     /**
@@ -79,9 +79,9 @@ class JenisBarangController extends Controller
      * @param  \App\Models\JenisBarang  $jenisBarang
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $jenisBarang = JenisBarang::find($id);
+        $jenisBarang = JenisBarang::find($request->id);
         $jenisBarang->kode = $request->kode;
         $jenisBarang->jenis = $request->jenis;
         $jenisBarang->save();
