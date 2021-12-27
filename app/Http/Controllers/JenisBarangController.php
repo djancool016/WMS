@@ -107,9 +107,9 @@ class JenisBarangController extends Controller
      * @param  \App\Models\JenisBarang  $jenisBarang
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $jenisBarang = JenisBarang::find($id);
+        $jenisBarang = JenisBarang::find($request->id);
         $jenisBarang->delete();
 
         if ($request->route()->getPrefix() === 'api') {

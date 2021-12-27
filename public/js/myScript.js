@@ -1,5 +1,5 @@
 $(document).ready( function () {
-   table = $('#tb_barang,#tb_suplier,#tb_jenis').DataTable({
+   table = $('#tb_barang,#tb_suplier,#tb_jenis,#tb_customer').DataTable({
     dom: 'Bfrtip',
     buttons: [
         {
@@ -52,6 +52,7 @@ $(document).ready( function () {
             $('#alamat').attr('value', table.row( this ).data()[4]);  
         }
     });
+
     $('#tb_jenis').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
@@ -62,6 +63,21 @@ $(document).ready( function () {
             $('#id,#id_delete').attr('value', table.row( this ).data()[0]);    
             $('#kode').attr('value', table.row( this ).data()[1]);    
             $('#jenis').attr('value', table.row( this ).data()[2]);   
+        }
+    });
+
+    $('#tb_customer').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');    
+            $('#id,#id_delete').attr('value', table.row( this ).data()[0]);    
+            $('#nama').attr('value', table.row( this ).data()[1]);    
+            $('#alamat').attr('value', table.row( this ).data()[2]);  
+            $('#telp').attr('value', table.row( this ).data()[3]);  
+            $('#email').attr('value', table.row( this ).data()[4]);  
         }
     });
 });
