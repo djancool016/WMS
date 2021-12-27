@@ -86,7 +86,7 @@ class JenisBarangController extends Controller
         $jenisBarang->jenis = $request->jenis;
         $jenisBarang->save();
 
-        return "Data Berhasil di Update!!!";
+        return redirect('jenis_barang');
     }
 
     /**
@@ -95,11 +95,11 @@ class JenisBarangController extends Controller
      * @param  \App\Models\JenisBarang  $jenisBarang
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $jenisBarang = JenisBarang::find($id);
+        $jenisBarang = JenisBarang::find($request->id);
         $jenisBarang->delete();
 
-        return "Data Berhasil di Hapus!!!";
+        return redirect('jenis_barang');
     }
 }
