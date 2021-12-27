@@ -15,9 +15,9 @@ class JenisBarangController extends Controller
      */
     public function index()
     {
-        $jenisBarang = JenisBarang::select('jenis','kode',DB::raw("COUNT(jenis) as jumlah_produk, SUM(barang.harga*barang.stock) as total_harga_stok"))
+        $jenisBarang = JenisBarang::select('jenis_barang.id','jenis','kode',DB::raw("COUNT(jenis) as jumlah_produk, SUM(barang.harga*barang.stock) as total_harga_stok"))
         ->leftJoin('barang','barang.jenis_barang_id','=','jenis_barang.id')
-        ->groupBy('jenis','kode')
+        ->groupBy('jenis_barang.id','jenis','kode')
         ->get();
 
         return view ('jenisbarang', compact('jenisBarang'));

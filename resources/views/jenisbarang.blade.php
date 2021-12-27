@@ -76,7 +76,7 @@
                     <div class="form form-group">
                         <input type="hidden" class="form-control" name="id" id="id">
                         <label for="kode">Kode</label>
-                        <select name="kode" class="custom-select" id="kode">
+                        <select name="kode" class="custom-select" id="kode" required>
                             <option value="">--Pilih Kode--</option>
                             <option value="A">A - Barang Sehari - hari</option>
                             <option value="B">B - Barang Toko</option>
