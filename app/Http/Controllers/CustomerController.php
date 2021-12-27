@@ -12,10 +12,16 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $customer = Customer::get();
-        return view('customer', compact('customer'));
+
+        if ($request->route()->getPrefix() === 'api') {
+            return compact('customer');
+        } else {
+            return view('customer', compact('customer'));
+        }
+        
     }
 
     /**
@@ -43,7 +49,11 @@ class CustomerController extends Controller
         $customer->alamat = $request->alamat;
         $customer->save();
 
-        return redirect ('/customer');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Disimpan!!!";
+        } else {
+            return redirect ('/customer');
+        }
     }
 
     /**
@@ -84,7 +94,11 @@ class CustomerController extends Controller
         $customer->telp = $request->telp;
         $customer->save();
 
-        return redirect ('/customer');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Diubah!!!";
+        } else {
+            return redirect ('/customer');
+        }
     }
 
     /**
@@ -98,6 +112,10 @@ class CustomerController extends Controller
         $customer = Customer::find($request->id);
         $customer->delete();
 
-        return redirect ('/customer');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Dihapus!!!";
+        } else {
+            return redirect ('/customer');
+        }
     }
 }

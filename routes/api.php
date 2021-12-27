@@ -25,3 +25,4 @@ Route::resource('jenis_barang', 'JenisBarangController');
 Route::resource('barang', 'BarangController');
 Route::resource('user_account', 'UserAccountController');
 Route::resource('status', 'StatusController');
+Route::resource('customer', 'CustomerController');
