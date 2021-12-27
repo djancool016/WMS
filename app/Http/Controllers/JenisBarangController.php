@@ -13,15 +13,18 @@ class JenisBarangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $jenisBarang = JenisBarang::select('jenis_barang.id','jenis','kode',DB::raw("COUNT(jenis) as jumlah_produk, SUM(barang.harga*barang.stock) as total_harga_stok"))
         ->leftJoin('barang','barang.jenis_barang_id','=','jenis_barang.id')
         ->groupBy('jenis_barang.id','jenis','kode')
         ->get();
 
-        return view ('jenisbarang', compact('jenisBarang'));
-        //return $jenisBarang;
+        if ($request->route()->getPrefix() === 'api') {
+            return compact('jenisBarang');
+        } else {
+            return view ('jenisbarang', compact('jenisBarang'));
+        }
     }
 
     /**
@@ -47,7 +50,12 @@ class JenisBarangController extends Controller
         $jenisBarang->jenis = $request->jenis;
         $jenisBarang->save();
 
-        return redirect('jenis_barang');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Disimpan!!!";
+        } else {
+            return redirect('jenis_barang');
+        }
+        
     }
 
     /**
@@ -86,7 +94,11 @@ class JenisBarangController extends Controller
         $jenisBarang->jenis = $request->jenis;
         $jenisBarang->save();
 
-        return "Data Berhasil di Update!!!";
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Diubah!!!";
+        } else {
+            return redirect('jenis_barang');
+        }
     }
 
     /**
@@ -100,6 +112,10 @@ class JenisBarangController extends Controller
         $jenisBarang = JenisBarang::find($id);
         $jenisBarang->delete();
 
-        return "Data Berhasil di Hapus!!!";
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Dihapus!!!";
+        } else {
+            return redirect('jenis_barang');
+        }
     }
 }

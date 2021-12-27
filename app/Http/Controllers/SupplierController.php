@@ -12,11 +12,16 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $supplier = Supplier::get(); 
-        return view ('suplier', compact('supplier'));
-        // return $supplier;
+
+        if ($request->route()->getPrefix() === 'api') {
+            return compact('supplier');
+        } else {
+            return view ('suplier', compact('supplier'));
+        }
+        
     }
 
     /**
@@ -44,7 +49,13 @@ class SupplierController extends Controller
         $supplier->alamat = $request->alamat;
         $supplier->save();
 
-        return redirect ('/suplier');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Disimpan!!!";
+        } else {
+            return redirect ('/suplier');
+        }
+
+        
     }
 
     /**
@@ -85,7 +96,11 @@ class SupplierController extends Controller
         $supplier->alamat = $request->alamat;
         $supplier->save();
 
-        return redirect ('/suplier');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Diubah!!!";
+        } else {
+            return redirect ('/suplier');
+        }
     }
 
     /**
@@ -99,6 +114,10 @@ class SupplierController extends Controller
         $supplier = Supplier::find($request->id);
         $supplier->delete();
 
-        return redirect ('/suplier');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Dihapus!!!";
+        } else {
+            return redirect ('/suplier');
+        }
     }
 }

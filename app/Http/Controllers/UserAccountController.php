@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Departement;
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
 
-class DepartementController extends Controller
+class UserAccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,12 @@ class DepartementController extends Controller
      */
     public function index(Request $request)
     {
-        $departement = Departement::get();
+        $users = UserAccount::get();
 
         if ($request->route()->getPrefix() === 'api') {
-            return compact('departement');
+            return compact('users');
         } else {
-            return view ('barang', compact('departement'));
+            return view ('user_account', compact('users'));
         }
     }
 
@@ -41,24 +41,16 @@ class DepartementController extends Controller
      */
     public function store(Request $request)
     {
-        $departement = new Departement;
-        $departement->nama = $request->nama;
-        $departement->save();
-
-        if ($request->route()->getPrefix() === 'api') {
-            return "Data Berhasil Disimpan!!!";
-        } else {
-            return redirect ('/departement');
-        }
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Departement  $departement
+     * @param  \App\Models\UserAccount  $userAccount
      * @return \Illuminate\Http\Response
      */
-    public function show(Departement $departement)
+    public function show(UserAccount $userAccount)
     {
         //
     }
@@ -66,10 +58,10 @@ class DepartementController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Departement  $departement
+     * @param  \App\Models\UserAccount  $userAccount
      * @return \Illuminate\Http\Response
      */
-    public function edit(Departement $departement)
+    public function edit(UserAccount $userAccount)
     {
         //
     }
@@ -78,38 +70,42 @@ class DepartementController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Departement  $departement
+     * @param  \App\Models\UserAccount  $userAccount
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        $departement = Departement::find($request->id);
-        $departement->nama = $request->nama;
-        $departement->save();
+        $users = UserAccount::find($request->id);
+        $users->name = $request->name;
+        $users->email = $request->email;
+        $users->alamat = $request->alamat;
+        $users->telp = $request->telp;
+        $users->departement_id = $request->departement_id;
+        $users->save();
 
         if ($request->route()->getPrefix() === 'api') {
             return "Data Berhasil Diubah!!!";
         } else {
-            return redirect ('/departement');
+            return redirect ('/');
         }
-
+        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Departement  $departement
+     * @param  \App\Models\UserAccount  $userAccount
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $departement = $departement::find($request->id);
-        $departement->delete();
+        // $users = UserAccount::find($request->id);
+        // $users->delete();
 
-        if ($request->route()->getPrefix() === 'api') {
-            return "Data Berhasil Dihapus!!!";
-        } else {
-            return redirect ('/departement');
-        }
+        // if ($request->route()->getPrefix() === 'api') {
+        //     return "Data Berhasil Diubah!!!";
+        // } else {
+        //     return redirect ('/');
+        // }
     }
 }

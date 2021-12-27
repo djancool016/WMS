@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Departement;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
-class DepartementController extends Controller
+class StatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,12 @@ class DepartementController extends Controller
      */
     public function index(Request $request)
     {
-        $departement = Departement::get();
+        $status = Status::get();
 
-        if ($request->route()->getPrefix() === 'api') {
-            return compact('departement');
-        } else {
-            return view ('barang', compact('departement'));
+        if($request->route()->getPrefix() === 'api'){
+            return compact('status');
+        }else{
+            return view('/', compact('status'));
         }
     }
 
@@ -41,24 +41,24 @@ class DepartementController extends Controller
      */
     public function store(Request $request)
     {
-        $departement = new Departement;
-        $departement->nama = $request->nama;
-        $departement->save();
+        $status = new Status;
+        $status->status = $request->status;
+        $status->save();
 
-        if ($request->route()->getPrefix() === 'api') {
-            return "Data Berhasil Disimpan!!!";
-        } else {
-            return redirect ('/departement');
+        if($request->route()->getPrefix() === 'api'){
+            return "Data Berhasil Ditambahkan!!!";
+        }else{
+            return view('/', compact('status'));
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Departement  $departement
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function show(Departement $departement)
+    public function show(Status $status)
     {
         //
     }
@@ -66,10 +66,10 @@ class DepartementController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Departement  $departement
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function edit(Departement $departement)
+    public function edit(Status $status)
     {
         //
     }
@@ -78,38 +78,37 @@ class DepartementController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Departement  $departement
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        $departement = Departement::find($request->id);
-        $departement->nama = $request->nama;
-        $departement->save();
+        $status = Status::find($request->id);
+        $status->status = $request->status;
+        $status->save();
 
-        if ($request->route()->getPrefix() === 'api') {
+        if($request->route()->getPrefix() === 'api'){
             return "Data Berhasil Diubah!!!";
-        } else {
-            return redirect ('/departement');
+        }else{
+            return view('/', compact('status'));
         }
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Departement  $departement
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $departement = $departement::find($request->id);
-        $departement->delete();
+        $status = Status::find($request->id);
+        $status->delete();
 
-        if ($request->route()->getPrefix() === 'api') {
+        if($request->route()->getPrefix() === 'api'){
             return "Data Berhasil Dihapus!!!";
-        } else {
-            return redirect ('/departement');
+        }else{
+            return view('/', compact('status'));
         }
     }
 }

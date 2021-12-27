@@ -13,7 +13,7 @@ class BarangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $barang = Barang::select('barang.*',DB::raw("CONCAT(jenis_barang.kode,RIGHT(CONCAT('0000', barang.id), 4)) AS kode_barang"),'jenis','suppliers.nama as suplier')
         ->join('jenis_barang','jenis_barang.id','=','barang.jenis_barang_id')
@@ -29,9 +29,12 @@ class BarangController extends Controller
         ->select('suppliers.*')
         ->orderBy('nama', 'asc')
         ->get();
-
-        return view ('barang', compact('barang','jenis_barang','suplier'));
-        //return compact('barang','jenis_barang');
+        
+        if ($request->route()->getPrefix() === 'api') {
+            return compact('barang','jenis_barang');
+        } else {
+            return view ('barang', compact('barang','jenis_barang','suplier'));
+        }
     }
     
     /**
@@ -61,7 +64,11 @@ class BarangController extends Controller
         $barang->suplier_id = $request->suplier_id;
         $barang->save();
 
-        return redirect ('/barang');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Disimpan!!!";
+        } else {
+            return redirect ('/barang');
+        }
     }
 
     /**
@@ -104,7 +111,11 @@ class BarangController extends Controller
         $barang->suplier_id = $request->suplier_id;
         $barang->save();
 
-        return redirect ('/barang');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Diubah!!!";
+        } else {
+            return redirect ('/barang');
+        }
     }
 
     /**
@@ -118,6 +129,10 @@ class BarangController extends Controller
         $barang = Barang::find($request->id);
         $barang->delete();
 
-        return redirect ('/barang');
+        if ($request->route()->getPrefix() === 'api') {
+            return "Data Berhasil Dihapus!!!";
+        } else {
+            return redirect ('/barang');
+        }
     }
 }
